@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springboozle2
+  labels:
+    app: springboozle2
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: springboozle2
+  template:
+    metadata:
+      labels:
+        app: springboozle2
+    spec:
+      containers:
+      - name: springboozle2
+        image: briankmatheson/springboozle2:1
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: springboozle2
+spec:
+  selector:
+    app: springboozle2
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
